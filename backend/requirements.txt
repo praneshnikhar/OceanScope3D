@@ -1,0 +1,8 @@
+fastapi==0.115.6
+uvicorn[standard]==0.32.1
+numpy==1.26.4
+pandas==2.2.3
+xarray==2024.11.0
+zarr==2.18.3
+numcodecs==0.13.1
+netCDF4==1.7.2
