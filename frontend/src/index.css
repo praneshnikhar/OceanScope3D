@@ -255,3 +255,228 @@ button:hover {
   font-size: 14px;
   line-height: 1.6;
 }
+
+/* --- animation controls --- */
+
+.anim-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.anim-row select {
+  flex: 1;
+}
+
+.play-btn,
+.fly-btn {
+  white-space: nowrap;
+}
+
+.play-btn.active,
+.fly-btn.active {
+  background: #1d5a86;
+  border-color: #4fc3f7;
+  color: #e8f7ff;
+}
+
+/* --- advanced layers section --- */
+
+.adv-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-top: 1px solid #1c3049;
+  padding-top: 12px;
+}
+
+.adv-toggle {
+  background: none;
+  border: none;
+  color: #8fb0cf;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  text-align: left;
+  padding: 2px 0;
+  cursor: pointer;
+}
+
+.adv-toggle:hover {
+  background: none;
+  color: #bfe3ff;
+}
+
+.check.disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.src-badge {
+  margin-left: auto;
+  font-style: normal;
+  font-size: 9px;
+  color: #4fc3f7;
+  border: 1px solid #24425f;
+  border-radius: 999px;
+  padding: 1px 7px;
+  letter-spacing: 0.05em;
+}
+
+.field.sub {
+  padding-left: 22px;
+}
+
+.misfit-stats {
+  font-size: 10px;
+  color: #ffb4c2;
+  padding-left: 22px;
+  font-variant-numeric: tabular-nums;
+}
+
+.fly-btn {
+  width: 100%;
+}
+
+/* --- marker tooltip --- */
+
+.marker-tip {
+  position: absolute;
+  z-index: 20;
+  pointer-events: none;
+  transform: translate(14px, -50%);
+  background: rgba(9, 18, 32, 0.94);
+  border: 1px solid #24425f;
+  border-radius: 8px;
+  padding: 8px 11px;
+  font-size: 11px;
+  color: #b8cde2;
+  backdrop-filter: blur(6px);
+  min-width: 130px;
+}
+
+.tip-id {
+  color: #e8f4ff;
+  font-weight: 600;
+}
+
+.tip-kind {
+  color: #4fc3f7;
+  text-transform: uppercase;
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  margin-bottom: 3px;
+}
+
+.tip-diff {
+  color: #ffd166;
+  font-variant-numeric: tabular-nums;
+  margin-top: 3px;
+}
+
+.tip-hint {
+  color: #5f7d99;
+  margin-top: 3px;
+}
+
+/* --- profile panel --- */
+
+.profile-panel {
+  position: absolute;
+  bottom: 18px;
+  left: 18px;
+  z-index: 15;
+  background: rgba(9, 18, 32, 0.93);
+  border: 1px solid #24425f;
+  border-radius: 10px;
+  padding: 12px 14px 10px;
+  backdrop-filter: blur(6px);
+}
+
+.pp-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 6px;
+}
+
+.pp-title {
+  color: #e8f4ff;
+  font-weight: 600;
+  font-size: 13px;
+  display: block;
+}
+
+.pp-sub {
+  color: #5f7d99;
+  font-size: 10px;
+}
+
+.pp-close {
+  background: none;
+  border: none;
+  color: #5f7d99;
+  font-size: 13px;
+  cursor: pointer;
+  padding: 2px 4px;
+}
+
+.pp-close:hover {
+  color: #ff8896;
+  background: none;
+}
+
+.pp-svg {
+  display: block;
+  background: rgba(8, 17, 32, 0.5);
+  border-radius: 6px;
+}
+
+.pp-legend {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  font-size: 10px;
+  margin-top: 6px;
+}
+
+.lg::before {
+  content: '';
+  display: inline-block;
+  width: 14px;
+  height: 2px;
+  margin-right: 5px;
+  vertical-align: middle;
+  border-radius: 1px;
+}
+
+.lg-obs::before {
+  background: #ffd166;
+}
+
+.lg-model::before {
+  background: #4fc3f7;
+}
+
+.lg-units {
+  color: #5f7d99;
+}
+
+/* --- HUD extras --- */
+
+.hud-fly,
+.hud-play {
+  color: #ffd166;
+}
+
+.hud-play {
+  animation: pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  50% {
+    opacity: 0.45;
+  }
+}

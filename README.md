@@ -40,8 +40,10 @@ code changes needed to add a dataset.
 Roadmap and full design notes live in the project planning doc; phases:
 
 - [x] **Phase 1** — FastAPI adapter registry + Zarr serving; Three.js depth-slice viewer over Bay of Bengal volume; vector overlay; colorbar editing
-- [ ] **Phase 2** — Argo/Glider markers via ERDDAP (`argopy`), click-to-profile charts, time-step animation
-- [ ] **Phase 3** — isosurface extraction (marching cubes), GPU particle advection, fly-through camera, model-vs-obs difference layer
+- [x] **Phase 2** — Argo/Glider markers via ERDDAP (`argopy`, optional), click-to-profile charts, time-step animation
+- [x] **Phase 3** — isosurface extraction (surface nets), GPU particle advection (ping-pong FBO), fly-through camera, model-vs-obs difference layer
+
+See `STATUS.md` for the current implementation state, verification notes, and known issues carried over from the last session.
 
 ## Sample data
 

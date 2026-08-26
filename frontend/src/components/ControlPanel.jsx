@@ -1,3 +1,11 @@
+import { useState } from 'react'
+
+const PLAY_SPEEDS = [
+  { label: '0.5 s / step', ms: 500 },
+  { label: '1 s / step', ms: 1000 },
+  { label: '2 s / step', ms: 2000 },
+]
+
 export default function ControlPanel({
   datasets,
   dsId,
@@ -21,8 +29,29 @@ export default function ControlPanel({
   sliceInfo,
   autoRange,
   onAutoRange,
+  playing,
+  onPlaying,
+  playMs,
+  onPlayMs,
+  obsSource,
+  showObs,
+  onShowObs,
+  showDiff,
+  onShowDiff,
+  misfitStats,
+  isoEnabled,
+  onIsoEnabled,
+  isoLevel,
+  onIsoLevel,
+  isoValue,
+  particlesOn,
+  onParticlesOn,
+  flyActive,
+  onFlyActive,
 }) {
+  const [advOpen, setAdvOpen] = useState(true)
   const timeLabel = sliceInfo?.time ? String(sliceInfo.time).slice(0, 16).replace('T', ' ') : '—'
+  const hasObs = Boolean(obsSource) && obsSource !== 'none'
 
   return (
     <aside className="panel">
@@ -65,6 +94,22 @@ export default function ControlPanel({
           value={tIdx}
           onChange={(e) => onTime(+e.target.value)}
         />
+        <div className="anim-row">
+          <button
+            className={`play-btn${playing ? ' active' : ''}`}
+            onClick={() => onPlaying(!playing)}
+            title={playing ? 'pause animation' : 'play animation'}
+          >
+            {playing ? '❚❚ Pause' : '▶ Play'}
+          </button>
+          <select value={playMs} onChange={(e) => onPlayMs(+e.target.value)}>
+            {PLAY_SPEEDS.map((s) => (
+              <option key={s.ms} value={s.ms}>
+                {s.label}
+              </option>
+            ))}
+          </select>
+        </div>
       </div>
 
       <div className="field">
@@ -77,20 +122,6 @@ export default function ControlPanel({
           max={Math.max(0, (depthValues?.length ?? 1) - 1)}
           value={zIdx}
           onChange={(e) => onDepth(+e.target.value)}
-        />
-      </div>
-
-      <div className="field">
-        <span>
-          Vertical exaggeration <em>{exaggeration}×</em>
-        </span>
-        <input
-          type="range"
-          min={1}
-          max={10}
-          step={0.5}
-          value={exaggeration}
-          onChange={(e) => onExaggeration(+e.target.value)}
         />
       </div>
 
@@ -117,6 +148,80 @@ export default function ControlPanel({
         <input type="checkbox" checked={showVectors} onChange={(e) => onShowVectors(e.target.checked)} />
         Overlay current vectors
       </label>
+
+      <section className="adv-section">
+        <button className="adv-toggle" onClick={() => setAdvOpen(!advOpen)}>
+          {advOpen ? '▾' : '▸'} Analysis layers
+        </button>
+
+        {advOpen && (
+          <>
+            <label className={`check${hasObs ? '' : ' disabled'}`}>
+              <input
+                type="checkbox"
+                disabled={!hasObs}
+                checked={showObs && hasObs}
+                onChange={(e) => onShowObs(e.target.checked)}
+              />
+              Argo &amp; glider observations
+              {hasObs && <em className="src-badge">{obsSource}</em>}
+            </label>
+
+            <label className={`check${showObs && hasObs ? '' : ' disabled'}`}>
+              <input
+                type="checkbox"
+                disabled={!showObs || !hasObs}
+                checked={showDiff}
+                onChange={(e) => onShowDiff(e.target.checked)}
+              />
+              Model − obs difference layer
+            </label>
+            {showDiff && misfitStats && (
+              <div className="misfit-stats">
+                bias {misfitStats.bias >= 0 ? '+' : ''}
+                {misfitStats.bias.toFixed(3)} · rmse {misfitStats.rmse.toFixed(3)} · n=
+                {misfitStats.count}
+              </div>
+            )}
+
+            <label className="check">
+              <input type="checkbox" checked={isoEnabled} onChange={(e) => onIsoEnabled(e.target.checked)} />
+              Isosurface
+            </label>
+            {isoEnabled && (
+              <div className="field sub">
+                <span>
+                  Iso level <em>{isoValue != null ? isoValue.toFixed(2) : '—'}</em>
+                </span>
+                <input
+                  type="range"
+                  min={0}
+                  max={1}
+                  step={0.01}
+                  value={isoLevel}
+                  onChange={(e) => onIsoLevel(+e.target.value)}
+                />
+              </div>
+            )}
+
+            <label className="check">
+              <input
+                type="checkbox"
+                checked={particlesOn}
+                onChange={(e) => onParticlesOn(e.target.checked)}
+              />
+              Current particle advection (GPU)
+            </label>
+
+            <div className="field">
+              <span>Camera</span>
+              <button className={`fly-btn${flyActive ? ' active' : ''}`} onClick={() => onFlyActive(!flyActive)}>
+                {flyActive ? '■ Exit fly-through' : '✈ Fly-through'}
+              </button>
+            </div>
+          </>
+        )}
+      </section>
 
       <div className="status">
         <div>{sliceInfo ? `${sliceInfo.long_name} @ ${timeLabel} / ${sliceInfo.depth} m` : 'loading…'}</div>

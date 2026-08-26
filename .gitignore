@@ -6,3 +6,4 @@ dist/
 backend/data/
 .DS_Store
 .env
+.gstack/
